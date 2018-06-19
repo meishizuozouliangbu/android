@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MyDiary2018</string>
+    <string name="welcome">Hello ! My Diary !</string>
+    <string name="edit_title">日记标题</string>
+    <string name="edit_comment">日记内容</string>
+    <string name="edit_save">保存</string>
+    <string name="edit_mapText">当前经度、纬度及天气情况</string>
+    <string name="edit_map">获取当前位置及天气</string>
+    <string name="edit_giveup">返回</string>
+</resources>
