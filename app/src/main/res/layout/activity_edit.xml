@@ -25,7 +25,7 @@
         android:layout_height="320dp"
         android:layout_weight="0.67"
         android:gravity="top"
-        android:text="日记正本" />
+        android:text="" />
 
     <LinearLayout
         android:layout_width="fill_parent"

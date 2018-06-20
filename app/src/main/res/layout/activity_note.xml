@@ -55,14 +55,6 @@
             android:layout_weight="1"
             android:text="新的日记"
             android:onClick="onMyButtonClick"/>
-        <Button
-            android:id="@+id/menuMe"
-            android:background="@drawable/tabmenu_account_on"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="我"
-            android:onClick="onMyButtonClick"/>
     </LinearLayout>
 
 </LinearLayout>

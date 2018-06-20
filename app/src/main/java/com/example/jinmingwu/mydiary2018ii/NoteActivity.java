@@ -31,7 +31,7 @@ import me.itangqi.greendao.NoteDao;
  */
 
 public class NoteActivity extends ListActivity {
-    private int number = 0;
+    private int number = 0; //记录ListView显示次数
     private SQLiteDatabase db;
     private EditText editText;
     private DaoMaster daoMaster;
@@ -104,13 +104,12 @@ public class NoteActivity extends ListActivity {
                 //addNote();
                 Intent intent = new Intent();
                 intent.setClass(NoteActivity.this, EditActivity.class);
+                intent.setAction(EditActivity.INSERT_DIARY_ACTION);
+                intent.setData(getIntent().getData());
                 startActivity(intent);
                 break;
             case R.id.buttonSearch:
                 search();
-                break;
-            case R.id.menuMe:
-
                 break;
             case R.id.menuList:
                 if(++number % 2 == 0){
@@ -120,6 +119,7 @@ public class NoteActivity extends ListActivity {
                     refreshUp();
                     buttonList.setText("我的列表Up");
                 }
+                editText.setText("");
                 Toast.makeText(getApplicationContext(),"已重新刷新列表",Toast.LENGTH_SHORT).show();
                 break;
             default:
@@ -144,22 +144,14 @@ public class NoteActivity extends ListActivity {
 
     private void search() {
         String noteText = editText.getText().toString();
-        editText.setText("");
-        if (noteText == null || noteText.equals("")) {
-            Toast.makeText(getApplicationContext(),"请输入需要查询的词语",Toast.LENGTH_SHORT).show();
-        } else {
-            // Query 类代表了一个可以被重复执行的查询
-            Query query = getNoteDao().queryBuilder()
-                    .where(NoteDao.Properties.Title.eq(noteText))
-                    .orderAsc(NoteDao.Properties.Date)
-                    .build();
-            // 查询结果以 List 返回
-            List notes = query.list();
-            Toast.makeText(getApplicationContext(),"There have " + notes.size() + " records",Toast.LENGTH_SHORT).show();
-        }
-        // 在 QueryBuilder 类中内置两个 Flag 用于方便输出执行的 SQL 语句与传递参数的值
-        QueryBuilder.LOG_SQL = true;
-        QueryBuilder.LOG_VALUES = true;
+        String textColumn = NoteDao.Properties.Title.columnName; //标题
+        String textColumn2 = NoteDao.Properties.Comment.columnName; //日期
+        String orderBy = NoteDao.Properties.Date.columnName + " COLLATE LOCALIZED ASC";
+        cursor = db.query(getNoteDao().getTablename(), getNoteDao().getAllColumns(), "TITLE like ?", new String[]{"%"+noteText+"%"}, null, null, orderBy);
+        String[] from = {textColumn, textColumn2};
+        int[] to = {android.R.id.text1, android.R.id.text2};
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, cursor, from, to);
+        setListAdapter(adapter);
     }
 
     /**
@@ -174,15 +166,23 @@ public class NoteActivity extends ListActivity {
         final long thisId = id;
         AlertDialog.Builder dialog = new AlertDialog.Builder(NoteActivity.this);
         dialog.setIcon(R.drawable.dialoginfo);
-        dialog.setTitle("温馨提示");
+        dialog.setTitle(daoSession.getNoteDao().load(thisId).getTitle());
+        dialog.setMessage(daoSession.getNoteDao().load(thisId).getDiary());
         dialog.setNegativeButton("修改", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 Intent intent = new Intent();
                 intent.setClass(NoteActivity.this, EditActivity.class);
-                intent.putExtra("title",NoteDao.Properties.Title.columnName);
-                
-                Toast.makeText(getApplicationContext(),"已修改",Toast.LENGTH_SHORT).show();
+                intent.setAction(EditActivity.EDIT_DIARY_ACTION);
+                Bundle bundle = new Bundle();
+                bundle.putLong("id", daoSession.getNoteDao().load(thisId).getId());
+                bundle.putString("title", daoSession.getNoteDao().load(thisId).getTitle());
+                bundle.putString("diary", daoSession.getNoteDao().load(thisId).getDiary());
+                bundle.putString("map", daoSession.getNoteDao().load(thisId).getMap());
+                intent.putExtras(bundle);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(),"正在修改",Toast.LENGTH_SHORT).show();
             }
         });
         dialog.setNeutralButton("删除", new DialogInterface.OnClickListener() {
