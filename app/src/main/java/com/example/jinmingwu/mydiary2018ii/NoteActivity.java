@@ -15,15 +15,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.List;
-
-import de.greenrobot.dao.query.Query;
-import de.greenrobot.dao.query.QueryBuilder;
 import me.itangqi.greendao.DaoMaster;
 import me.itangqi.greendao.DaoSession;
-import me.itangqi.greendao.Note;
 import me.itangqi.greendao.NoteDao;
 
 /**
@@ -165,10 +158,18 @@ public class NoteActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         final long thisId = id;
         AlertDialog.Builder dialog = new AlertDialog.Builder(NoteActivity.this);
-        dialog.setIcon(R.drawable.dialoginfo);
-        dialog.setTitle(daoSession.getNoteDao().load(thisId).getTitle());
-        dialog.setMessage(daoSession.getNoteDao().load(thisId).getDiary());
-        dialog.setNegativeButton("修改", new DialogInterface.OnClickListener() {
+        dialog.setIcon(R.drawable.dialogedit);
+        if(daoSession.getNoteDao().load(thisId).getTitle().toString().isEmpty() == true){
+            dialog.setTitle("空内容");
+        } else {
+            dialog.setTitle(daoSession.getNoteDao().load(thisId).getTitle());
+        }
+        if(daoSession.getNoteDao().load(thisId).getDiary().toString().isEmpty() == true){
+            dialog.setMessage("空内容");
+        } else {
+            dialog.setMessage(daoSession.getNoteDao().load(thisId).getDiary());
+        }
+        dialog.setNegativeButton("编辑", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -182,7 +183,7 @@ public class NoteActivity extends ListActivity {
                 bundle.putString("map", daoSession.getNoteDao().load(thisId).getMap());
                 intent.putExtras(bundle);
                 startActivity(intent);
-                Toast.makeText(getApplicationContext(),"正在修改",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"正在编辑",Toast.LENGTH_SHORT).show();
             }
         });
         dialog.setNeutralButton("删除", new DialogInterface.OnClickListener() {
