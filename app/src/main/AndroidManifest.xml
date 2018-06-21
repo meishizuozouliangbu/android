@@ -43,10 +43,6 @@
         </activity>
         <activity android:name=".NoteActivity" />
         <activity android:name=".EditActivity" />
-        <activity
-            android:name=".TencentActivity"
-            android:label="@string/title_activity_tencent"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name="com.baidu.location.f"
@@ -63,10 +59,6 @@
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".listShowActivity"
-            android:label="@string/title_activity_list"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
