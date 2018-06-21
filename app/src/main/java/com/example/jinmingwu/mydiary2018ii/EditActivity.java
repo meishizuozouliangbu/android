@@ -155,7 +155,6 @@ public class EditActivity extends AppCompatActivity {
         } else {
             finish();
         }
-
     }
 
     //optionBar Menu
@@ -180,6 +179,11 @@ public class EditActivity extends AppCompatActivity {
                 }
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(Intent.createChooser(intent, getTitle()));
+                break;
+            case R.id.about:
+                Intent intent2 = new Intent();
+                intent2.setClass(EditActivity.this, AboutActivity.class);
+                startActivity(intent2);
                 break;
             default:
                 break;

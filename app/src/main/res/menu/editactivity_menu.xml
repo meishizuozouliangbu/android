@@ -4,5 +4,8 @@
         android:id="@+id/edit_share"
         android:title="Share"
         android:icon="@drawable/edit_share" />
+    <item
+        android:id="@+id/about"
+        android:title="about" />
 
 </menu>

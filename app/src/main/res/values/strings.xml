@@ -7,10 +7,38 @@
     <string name="edit_mapText">当前经度、纬度</string>
     <string name="edit_map">获取当前位置</string>
     <string name="edit_giveup">返回</string>
+    <string name="seacher">关键字搜索</string>
 
     <string name="title_activity_tencent">TencentActivity</string>
     <string name="action_settings">Settings</string>
     <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 
     <string name="location">定位信息</string>
+    <string name="title_activity_list">ListActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_about">作品简介</string>
+    <string name="large_text">
+        "Android移动开发技术 课程设计作品\n"
+        "我的日记本\n"
+        "Power By jinmingwu\n"
+        "hello2018.cn\n"
+        "联系方式：jinmingwu@gamil.com\n"
+        "最后更新时间：2018年6月21日\n\n"
+
+        "更新的功能\n\n"
+        "增添了Baidu地图的API可获取当前所在地位置信息\n"
+        "增添了分享日记的功能\n"
+        "增添了actionBar Menu功能\n"
+        "修改了应用图标\n"
+        "增添了根据日记修改时间逆序排序显示\n"
+        "增添了根据日记修改时间正序排序显示\n"
+        "根据Dialog增添了一键删除所有日记\n"
+        "根据Dialog增添了删除所选中的日记\n"
+        "增添了可修改已存在的日记\n"
+        "增添了App启动画面\n"
+
+    </string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
