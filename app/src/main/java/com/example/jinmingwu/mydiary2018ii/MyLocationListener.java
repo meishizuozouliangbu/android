@@ -75,4 +75,7 @@ class MyLocationListener extends BDAbstractLocationListener {
         return this.addr;
     }
 
+    public void stop(){
+
+    }
 }

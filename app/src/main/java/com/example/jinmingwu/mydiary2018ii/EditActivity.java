@@ -56,7 +56,9 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
         myLocationText = (TextView)findViewById(R.id.editmapText);
 
+        //声明LocationClient类
         mLocationClient = new LocationClient(getApplicationContext());
+        //注册监听函数
         mLocationClient.registerLocationListener(myListener);
 
         //--------------------------------配置定位BAIDU SDK 参数 开始
@@ -173,6 +175,7 @@ public class EditActivity extends AppCompatActivity {
                 //findMap();
                 String address = myListener.getAddr();
                 myLocationText.setText(address);
+                myListener.stop();
                 break;
             default:
                 Log.d(TAG, "what has gone wrong ?");
@@ -261,5 +264,12 @@ public class EditActivity extends AppCompatActivity {
         // 注意：该数据库连接属于 DaoMaster，所以多个 Session 指的是相同的数据库连接。
         daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
+    }
+
+    @Override
+    protected void onPause() {
+        //myListener;
+        mLocationClient.stop();
+        super.onPause();
     }
 }
